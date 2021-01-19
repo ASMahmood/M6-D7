@@ -1,13 +1,13 @@
 const express = require("express");
 const Model = require("../../utilities/model");
-const Articles = new Model("articles");
+const Categories = new Model("categories");
 
 const router = express.Router();
 
 router.get("/:id", async (req, res) => {
   try {
-    const singleArticle = await Articles.findById(req.params.id);
-    res.send(singleArticle);
+    const singleCategory = await Categories.findById(req.params.id);
+    res.send(singleCategory);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
@@ -16,11 +16,11 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const updatedArticle = await Articles.findByIdAndUpdate(
+    const updatedCategory = await Categories.findByIdAndUpdate(
       req.params.id,
       req.body
     );
-    res.send(updatedArticle);
+    res.send(updatedCategory);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
@@ -29,8 +29,8 @@ router.put("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const newArticle = await Articles.save(req.body);
-    res.send(newArticle);
+    const newCategory = await Categories.save(req.body);
+    res.send(newCategory);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await Articles.findByIdAndDelete(req.params.id);
+    await Categories.findByIdAndDelete(req.params.id);
     res.send("EXECUTED");
   } catch (error) {
     console.log(error);
@@ -49,8 +49,8 @@ router.delete("/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const allArticles = await Articles.findOne(req.query);
-    res.send(allArticles);
+    const allCategories = await Categories.findOne(req.query);
+    res.send(allCategories);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

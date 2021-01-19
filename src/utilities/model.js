@@ -40,7 +40,7 @@ class Model {
 
   //POST METHOD
   async save(body) {
-    if (!body || Object.values(search).length === 0) {
+    if (!body || Object.values(body).length === 0) {
       throw new Error("Oi! Give us a body, you scallywag!");
     }
     const entries = Object.entries(body);
