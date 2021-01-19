@@ -14,4 +14,27 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedArticle = await Articles.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    );
+    res.send(updatedArticle);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+router.post("/", async (req, res) => {
+  try {
+    const newArticle = await Articles.save(req.body);
+    res.send(newArticle);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;
