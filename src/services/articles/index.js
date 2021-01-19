@@ -37,4 +37,24 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedArticle = await Articles.findByIdAndDelete(req.params.id);
+    res.send("EXECUTED");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const allArticles = await Articles.findOne(req.query);
+    res.send(allArticles);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;

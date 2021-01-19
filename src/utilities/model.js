@@ -40,7 +40,7 @@ class Model {
 
   //POST METHOD
   async save(body) {
-    if (!body) {
+    if (!body || Object.values(search).length === 0) {
       throw new Error("Oi! Give us a body, you scallywag!");
     }
     const entries = Object.entries(body);
@@ -49,6 +49,33 @@ class Model {
     )}) VALUES(${entries.map((entry) => `'${entry[1]}'`)})`;
     const response = await this.run(query);
     return response;
+  }
+
+  //DELETE METHOD
+  async findByIdAndDelete(id) {
+    if (!id) {
+      throw new Error("You did not include an id, you nincompoop");
+    }
+    const query = `DELETE FROM ${this.name} WHERE id=${parseInt(id)}`;
+    const response = await this.run(query);
+    return response;
+  }
+
+  //GET ALL METHOD
+  async findOne(search) {
+    if (!search || Object.values(search).length === 0) {
+      //BASIC GET ALL
+      const query = `SELECT * FROM ${this.name}`;
+      const response = await this.run(query);
+      return response.rows;
+    } else {
+      const entries = Object.entries(search);
+      const query = `SELECT * FROM ${this.name} WHERE ${entries
+        .map((entry) => `${entry[0]}='${entry[1]}'`)
+        .join(" AND ")}`;
+      const response = await this.run(query);
+      return response.rows;
+    }
   }
 }
 
