@@ -57,4 +57,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/count/all", async (req, res) => {
+  try {
+    const allCategories = await Categories.countCategories();
+    res.send(allCategories);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;

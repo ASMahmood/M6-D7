@@ -168,6 +168,19 @@ class Model {
       return response.rows;
     }
   }
+
+  //COUNT CATEGORIES
+  async countCategories() {
+    const query = `SELECT
+    categories.id,
+    categories.name,
+    COUNT(articles.categoryid) AS total_articles
+    FROM categories
+    INNER JOIN articles ON categories.id=articles.categoryid
+    GROUP BY (categories.id)`;
+    const response = await this.run(query);
+    return response.row;
+  }
 }
 
 module.exports = Model;
