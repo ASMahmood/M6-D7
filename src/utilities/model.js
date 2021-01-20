@@ -20,9 +20,31 @@ class Model {
     if (!id) {
       throw new Error("You did not include an id, you nincompoop");
     }
-    const query = `SELECT * FROM ${this.name} WHERE id=${parseInt(id)}`;
-    const response = await this.run(query);
-    return response;
+    if (this.name === "articles") {
+      const query = `SELECT 
+      articles.id, 
+      articles.headline, 
+      articles.subhead, 
+      articles.content, 
+      articles.cover, 
+      authors.id AS author_id,
+      authors.name AS author_name, 
+      authors.lastname AS author_lastname, 
+      authors.imgurl AS author_img,
+      categories.id AS category_id,
+      categories.name AS category,
+      categories.imgurl AS category_img
+      FROM articles
+      INNER JOIN authors ON articles.authorid=authors.id
+      INNER JOIN categories ON articles.categoryid=categories.id
+       WHERE articles.id=${parseInt(id)}`;
+      const response = await this.run(query);
+      return response.rows;
+    } else {
+      const query = `SELECT * FROM ${this.name} WHERE id=${parseInt(id)}`;
+      const response = await this.run(query);
+      return response.rows;
+    }
   }
 
   //PUT METHOD
